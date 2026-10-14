@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101711">
+<meta name="description" content="Тайны мира Minecraft — исследуем загадки, древние города, Незер, Энд и историю исчезнувших цивилизаций.">
+<title>Тайны мира Minecraft</title>
+
+<style>
+:root {
+  --bg: #0c100e;
+  --panel: #151c17;
+  --panel2: #1b251e;
+  --text: #f0f5f0;
+  --muted: #a2afa5;
+  --green: #80e16c;
+  --border: #2a392d;
+  --gold: #f4c66b;
+  --radius: 18px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+button:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+.wrap { width: min(1100px, 92%); margin: auto; }
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #0c100eeb;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+.nav {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 850;
+  letter-spacing: -.4px;
+}
+.logo {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4aab42, #234c2d);
+  font-size: 23px;
+}
+.nav-right { display: flex; align-items: center; gap: 9px; }
+.btn, .lang-btn {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 9px 13px;
+  background: var(--panel);
+  color: var(--text);
+}
+.btn:hover, .lang-btn:hover { border-color: var(--green); }
+.btn.primary {
+  background: var(--green);
+  border-color: var(--green);
+  color: #10200e;
+  font-weight: 800;
+}
+.hero { padding: 54px 0 35px; }
+.hero-box {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #304b32;
+  border-radius: 26px;
+  padding: clamp(24px, 5vw, 58px);
+  background:
+    radial-gradient(ellipse at 88% 12%, #356b374d, transparent 42%),
+    linear-gradient(135deg, #18251b, #111713 70%);
+}
+.eyebrow {
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  font-weight: 850;
+}
+h1 {
+  max-width: 720px;
+  font-size: clamp(35px, 7vw, 68px);
+  line-height: 1.06;
+  letter-spacing: -2px;
+  margin: 16px 0;
+}
+.hero p { max-width: 630px; color: var(--muted); font-size: 17px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.hero-art {
+  position: absolute;
+  right: 5%;
+  bottom: 0;
+  width: 190px;
+  height: 180px;
+  opacity: .8;
+  pointer-events: none;
+}
+.pixel {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border: 3px solid #0c100e88;
+  box-shadow: inset -8px -8px #0003, inset 5px 5px #ffffff18;
+}
+.pixel.p1 { right: 24px; bottom: 24px; background: #3f7639; }
+.pixel.p2 { right: 72px; bottom: 72px; background: #5d9650; }
+.pixel.p3 { right: 120px; bottom: 24px; background: #654a35; }
+.pixel.p4 { right: 72px; bottom: 24px; background: #705139; }
+.pixel.p5 { right: 72px; bottom: 120px; background: #3b5c42; }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+.stat {
+  background: #0c100e88;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+}
+.stat strong { display: block; font-size: 20px; }
+.stat span { color: var(--muted); font-size: 12px; }
+.section { padding: 28px 0 44px; }
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+h2 { font-size: clamp(24px, 4vw, 34px); line-height: 1.2; margin: 0; }
+.section-head p { color: var(--muted); margin: 6px 0 0; }
+.search {
+  display: flex;
+  gap: 10px;
+  margin: 22px 0 14px;
+}
+.search input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  padding: 14px 16px;
+  border-radius: 13px;
+}
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.chip {
+  padding: 8px 13px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  border-radius: 999px;
+}
+.chip.active { color: #11200f; background: var(--green); border-color: var(--green); }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  transition: transform .2s, border-color .2s;
+}
+.card:hover { transform: translateY(-3px); border-color: #527b4c; }
+.art {
+  height: 190px;
+  position: relative;
+  overflow: hidden;
+  background-color: #202c23;
+  background-image:
+    linear-gradient(135deg, transparent 25%, #ffffff08 25% 50%, transparent 50% 75%, #ffffff08 75%);
+  background-size: 42px 42px;
+}
+.art::before, .art::after { content: ""; position: absolute; }
+.art .block {
+  position: absolute;
+  width: 65px;
+  height: 65px;
+  border: 4px solid #111a1480;
+  box-shadow: inset -10px -10px #0003, inset 7px 7px #ffffff13;
+}
+.art .b1 { left: 20%; bottom: 20px; }
+.art .b2 { left: 40%; bottom: 85px; }
+.art .b3 { left: 60%; bottom: 20px; }
+.art .b4 { left: 40%; bottom: 20px; }
+.art .symbol {
+  position: absolute;
+  right: 18px;
+  top: 12px;
+  font-size: 48px;
+  filter: drop-shadow(0 6px 6px #0005);
+}
+.art.deep { background-color: #111c22; }
+.art.deep .b1, .art.deep .b4 { background: #29484b; }
+.art.deep .b2 { background: #344f50; }
+.art.deep .b3 { background: #192d35; }
+.art.deep .symbol { color: #80f0d2; }
+.art.end { background-color: #27213b; }
+.art.end .b1, .art.end .b4 { background: #5e426f; }
+.art.end .b2 { background: #4d3765; }
+.art.end .b3 { background: #7961a0; }
+.art.nether { background-color: #39201d; }
+.art.nether .b1, .art.nether .b4 { background: #8e3930; }
+.art.nether .b2 { background: #b85a37; }
+.art.nether .b3 { background: #63302a; }
+.art.ruins { background-color: #27352a; }
+.art.ruins .b1, .art.ruins .b4 { background: #526345; }
+.art.ruins .b2 { background: #7c8057; }
+.art.ruins .b3 { background: #464d39; }
+.card-body { padding: 18px; }
+.tag {
+  display: inline-block;
+  border-radius: 7px;
+  background: #29422c;
+  color: #b9f4ad;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 8px;
+}
+.card h3 { margin: 12px 0 8px; font-size: 21px; line-height: 1.3; }
+.card p { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+.card-foot { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+.read-link { color: var(--green); font-weight: 750; }
+.read-time { color: var(--muted); font-size: 12px; }
+.empty {
+  padding: 28px;
+  text-align: center;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--muted);
+  grid-column: 1 / -1;
+}
+.note {
+  padding: 18px;
+  background: #171f18;
+  border-left: 3px solid var(--gold);
+  border-radius: 10px;
+  color: var(--muted);
+}
+.note strong { color: var(--text); }
+footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--muted); font-size: 13px; }
+.footer-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+.hidden { display: none !important; }
+
+/* Экран чтения статьи */
+.article-top { padding: 26px 0 12px; }
+.back { color: var(--green); border: 0; background: transparent; padding: 8px 0; }
+.article { max-width: 800px; margin: 0 auto; padding: 12px 0 65px; }
+.article .art { border-radius: 20px; height: 260px; margin: 18px 0 26px; }
+.article h1 { font-size: clamp(32px, 6vw, 52px); letter-spacing: -1px; }
+.article .lead { font-size: 18px; color: var(--muted); }
+.article h2 { font-size: 25px; margin: 30px 0 12px; }
+.article p, .article li { font-size: 16px; }
+.article li { margin: 8px 0; }
+.fact-box, .theory-box {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  margin: 18px 0;
+  background: var(--panel);
+}
+.fact-box { border-left: 4px solid #6ca9ff; }
+.theory-box { border-left: 4px solid var(--gold); }
+.fact-box h3, .theory-box h3 { margin: 0 0 8px; }
+.article-meta { color: var(--muted); font-size: 13px; }
+
+@media (max-width: 650px) {
+  .brand { font-size: 14px; }
+  .logo { width: 35px; height: 35px; }
+  .nav { min-height: 62px; }
+  .nav-right { gap: 6px; }
+  .lang-btn, .btn { padding: 8px 10px; font-size: 13px; }
+  .hero { padding-top: 24px; }
+  .hero-box { padding: 25px 20px; }
+  .hero-art { opacity: .22; right: -20px; }
+  .hero p { font-size: 15px; }
+  .stats { gap: 7px; }
+  .stat { padding: 9px; }
+  .stat strong { font-size: 17px; }
+  .stat span { font-size: 10px; }
+  .section-head { display: block; }
+  .grid { grid-template-columns: 1fr; gap: 14px; }
+  .art { height: 180px; }
+  .article .art { height: 200px; }
+  .search { margin-top: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#" id="homeBrand" aria-label="На главную">
+      <span class="logo">◆</span>
+      <span>Тайны мира Minecraft</span>
+    </a>
+    <div class="nav-right">
+      <button class="lang-btn" id="langBtn" aria-label="Switch language">EN</button>
+      <button class="btn" id="allBtn">Все теории</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div id="homeView">
+    <section class="hero wrap">
+      <div class="hero-box">
+        <div class="eyebrow" data-i18n="eyebrow">Архив загадок · Исследование мира</div>
+        <h1 data-i18n="heroTitle">У каждого блока есть своя история.</h1>
+        <p data-i18n="heroText">
+          Исследуй забытые цивилизации, странные сооружения и тайны измерений.
+          Собирай улики и ищи собственные ответы.
+        </p>
+        <div class="hero-actions">
+          <button class="btn primary" id="exploreBtn" data-i18n="explore">Исследовать теории →</button>
+          <button class="btn" id="aboutBtn" data-i18n="aboutBtn">О проекте</button>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong id="statCount">4</strong><span data-i18n="statArticles">стартовые теории</span></div>
+          <div class="stat"><strong>2</strong><span data-i18n="statLanguages">языка сайта</span></div>
+          <div class="stat"><strong>∞</strong><span data-i18n="statMysteries">загадок впереди</span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <span class="pixel p1"></span><span class="pixel p2"></span>
+          <span class="pixel p3"></span><span class="pixel p4"></span>
+          <span class="pixel p5"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="library">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow" data-i18n="libraryEyebrow">Библиотека исследователя</div>
+          <h2 data-i18n="libraryTitle">Теории и загадки</h2>
+          <p data-i18n="libraryText">Выбери тему или найди статью по ключевому слову.</p>
+        </div>
+      </div>
+      <div class="search">
+        <input id="searchInput" type="search" placeholder="Поиск: древний город, скалк..." aria-label="Поиск по теориям">
+      </div>
+      <div class="filters" id="filters"></div>
+      <div class="grid" id="cards"></div>
+    </section>
+
+    <section class="section wrap" id="about">
+      <div class="note">
+        <strong data-i18n="aboutTitle">Как мы исследуем Minecraft?</strong>
+        <p data-i18n="aboutText">
+          Сначала собираем игровые факты, затем сравниваем улики и только после этого
+          предлагаем гипотезы. Теории на этом сайте — авторские версии, а не заявления
+          о подтверждённом официальном сюжете.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <section id="readerView" class="hidden">
+    <div class="wrap article-top">
+      <button class="back" id="backBtn">← Назад к библиотеке</button>
+    </div>
+    <article class="wrap article" id="articleContent"></article>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>© <span id="year"></span> Тайны мира Minecraft</span>
+    <span data-i18n="footerText">Фанатский исследовательский проект. Не связан с Mojang или Microsoft.</span>
+  </div>
+</footer>
+
+<script>
+const translations = {
+  ru: {
+    eyebrow: "Архив загадок · Исследование мира",
+    heroTitle: "У каждого блока есть своя история.",
+    heroText: "Исследуй забытые цивилизации, странные сооружения и тайны измерений. Собирай улики и ищи собственные ответы.",
+    explore: "Исследовать теории →", aboutBtn: "О проекте",
+    statArticles: "стартовые теории", statLanguages: "языка сайта", statMysteries: "загадок впереди",
+    libraryEyebrow: "Библиотека исследователя", libraryTitle: "Теории и загадки",
+    libraryText: "Выбери тему или найди статью по ключевому слову.",
+    search: "Поиск: древний город, скалк...",
+    aboutTitle: "Как мы исследуем Minecraft?",
+    aboutText: "Сначала собираем игровые факты, затем сравниваем улики и только после этого предлагаем гипотезы. Теории на этом сайте — авторские версии, а не заявления о подтверждённом официальном сюжете.",
+    footerText: "Фанатский исследовательский проект. Не связан с Mojang или Microsoft.",
+    all: "Все", deep: "Древние города", sculk: "Скалк", end: "Энд", nether: "Незер",
+    read: "Читать теорию →", minutes: "мин чтения", back: "← Назад к библиотеке",
+    facts: "Что известно в игре", hypothesis: "Гипотеза автора",
+    evidence: "Улики и наблюдения", alternatives: "Другие объяснения",
+    conclusion: "Вывод", disclaimer: "Это гипотеза, а не подтверждённый официальный сюжет.",
+    noResults: "Ничего не найдено. Попробуй другое слово или категорию.",
+    noContent: "Статья не найдена.", tags: "Ключевые слова"
+  },
+  en: {
+    eyebrow: "Mystery archive · World investigation",
+    heroTitle: "Every block has a story.",
+    heroText: "Explore forgotten civilizations, strange structures, and the secrets of dimensions. Collect clues and seek your own answers.",
+    explore: "Explore theories →", aboutBtn: "About the project",
+    statArticles: "starter theories", statLanguages: "site languages", statMysteries: "mysteries ahead",
+    libraryEyebrow: "Researcher’s library", libraryTitle: "Theories & mysteries",
+    libraryText: "Choose a topic or find an article by keyword.",
+    search: "Search: ancient city, sculk...",
+    aboutTitle: "How do we investigate Minecraft?",
+    aboutText: "First we collect in-game facts, then compare clues, and only then suggest hypotheses. The theories here are author interpretations, not confirmed official lore.",
+    footerText: "Fan research project. Not affiliated with Mojang or Microsoft.",
+    all: "All", deep: "Ancient cities", sculk: "Sculk", end: "The End", nether: "The Nether",
+    read: "Read theory →", minutes: "min read", back: "← Back to library",
+    facts: "What the game shows", hypothesis: "Author’s hypothesis",
+    evidence: "Clues and observations", alternatives: "Other explanations",
+    conclusion: "Conclusion", disclaimer: "This is a hypothesis, not confirmed official lore.",
+    noResults: "Nothing found. Try another word or category.",
+    noContent: "Article not found.", tags: "Keywords"
+  }
+};
+
+const articles = [
+  {
+    id: "ancient-cities", category: "deep", art: "deep", symbol: "⌁",
+    time: 5,
+    ru: {
+      title: "Кто построил древние города?",
+      desc: "Следы неизвестной культуры, огромные залы и сооружения глубоко под землёй.",
+      lead: "Древние города выглядят как остатки сложной постройки. Но кто её создал — и почему она оказалась заброшенной?",
+      facts: [
+        "Древние города генерируются в биоме Deep Dark, глубоко под землёй.",
+        "В них встречаются скалковые блоки, крикуны, сундуки и крупные каменные сооружения.",
+        "В центре города находится большая конструкция, напоминающая рамку портала, но она не работает как обычный активируемый портал."
+      ],
+      evidence: [
+        "Архитектура предполагает, что пространство было создано намеренно, а не возникло случайно.",
+        "Разнообразие помещений может указывать на разные функции отдельных частей города.",
+        "Скалк встречается в этом окружении, но сама по себе эта связь не доказывает, что строители его создали."
+      ],
+      hypothesis: "Одна из версий: город принадлежал цивилизации, которая исследовала неизвестную технологию или пыталась попасть в другое место. Возможно, жители покинули его после опасного события. Однако игра прямо не подтверждает ни личность строителей, ни причину исчезновения.",
+      alternatives: [
+        "Сооружение могло иметь символическое назначение, а не быть порталом.",
+        "Город мог быть заброшен по причинам, о которых игра ничего не сообщает.",
+        "Скалк мог распространиться позднее и не иметь отношения к создателям."
+      ],
+      conclusion: "Мы можем исследовать архитектуру и игровые механики, но точная история древних городов остаётся открытым вопросом.",
+      tags: "древний город цивилизация портал deep dark"
+    },
+    en: {
+      title: "Who built the Ancient Cities?",
+      desc: "Traces of an unknown culture, vast halls, and structures deep underground.",
+      lead: "Ancient Cities look like the remains of a complex settlement. Who created them, and why were they abandoned?",
+      facts: [
+        "Ancient Cities generate deep underground in the Deep Dark biome.",
+        "They contain sculk blocks, shriekers, chests, and large stone structures.",
+        "A large frame-like structure stands at the centre, but it does not function like a normal activatable portal."
+      ],
+      evidence: [
+        "The architecture suggests deliberate construction rather than a random natural formation.",
+        "Different rooms may have served different purposes.",
+        "Sculk appears in the area, but this alone does not prove the builders created it."
+      ],
+      hypothesis: "One possibility is that the city belonged to a civilization studying an unknown technology or attempting to reach another place. Perhaps its inhabitants left after a dangerous event. The game does not directly confirm who built the city or why it was abandoned.",
+      alternatives: [
+        "The structure may have been symbolic rather than a portal.",
+        "The city may have been abandoned for reasons the game never explains.",
+        "Sculk may have spread later and may be unrelated to the builders."
+      ],
+      conclusion: "We can study the architecture and game mechanics, but the exact history of the Ancient Cities remains an open question.",
+      tags: "ancient city civilization portal deep dark"
+    }
+  },
+  {
+    id: "sculk-warden", category: "sculk", art: "deep", symbol: "◉",
+    time: 6,
+    ru: {
+      title: "Связаны ли скалк и Страж?",
+      desc: "Разбираемся в сенсорах, крикунах и существе, которое приходит на их зов.",
+      lead: "В глубокой тьме звуки и движения имеют значение. Скалк реагирует на вибрации, а Страж становится угрозой для шумного исследователя.",
+      facts: [
+        "Скалковые сенсоры обнаруживают вибрации в игровом мире.",
+        "Скалковые крикуны могут призывать Стража при соблюдении игровых условий.",
+        "Страж ориентируется на звуки и вибрации, а также может обнаруживать игрока другими игровыми способами."
+      ],
+      evidence: [
+        "Скалк, крикуны и Страж часто встречаются в одной среде.",
+        "Механика крикуна связывает действия игрока с появлением Стража.",
+        "Эта игровая связь не объясняет полностью биологическое или историческое происхождение существ."
+      ],
+      hypothesis: "Возможная теория: скалк действует как распределённая система обнаружения, а Страж выполняет роль защитника глубокой тьмы. Это полезная интерпретация игровой механики, но она не доказывает, что кто-либо специально создал эту систему.",
+      alternatives: [
+        "Скалк и Страж могут быть естественными частями о
